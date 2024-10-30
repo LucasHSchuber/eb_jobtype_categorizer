@@ -4,25 +4,48 @@
     background-color: inherit;
     border: none;
     margin-left: 2em;
-    color: rgb(255, 35, 35);
+    margin-bottom: 0.5em;
+    color: rgb(136, 136, 136);
     cursor: pointer;
     border-radius: 50%;
+    font-size: 0.9em;
 }
 .delete-category-button:hover{
     background-color: rgb(228, 228, 228);
-    /* color: red; */
+    color: rgb(72, 72, 72);
 }
 
 
 .addnewcategory-button{
-    background-color: rgb(48, 48, 48);
-    border: 1px solid rgb(84, 84, 84);
+    background-color: #51f728;
+    border: 2px solid rgb(63, 63, 63);
+    padding: 0 0.5em 0.1em 0.5em;
+    border-radius: 3px;
     margin-left: 1em;
-    color: rgb(255, 255, 255);
+    font-weight: 700;
+    color: rgb(42, 42, 42);
     cursor: pointer;
 }
 .addnewcategory-button:hover{
-    background-color: rgb(83, 83, 83);
-    /* border: 1px solid black; */
-    /* color: red; */
+    background-color: rgb(219, 219, 219);
+
+}
+
+.link-button{
+    padding: 1em 1em;
+    background-color: inherit;
+    color: rgb(66, 66, 66);
+    font-size: 1em;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+.link-button:hover{
+    background-color: rgb(210, 210, 210);
+    color: rgb(0, 0, 0);
+    border-bottom: 1px solid grey;
+}
+.link-button:focus{
+    outline: none;
 }

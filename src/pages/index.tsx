@@ -12,6 +12,12 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 // import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'; 
 // import { faInstagram, faGithub, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
+// import loader
+import { Oval } from 'react-loader-spinner';  
+
+// import components
+import Sidemenu  from '../components/sidemenu';
+
 import { API_URL } from '../assets/js/apiConfig'
 console.log('import.meta.env', import.meta.env);
 console.log('API_URL', API_URL);
@@ -41,6 +47,8 @@ interface Data {
 
 function Index() {
     // Define states
+    const [loading, setLoading] = useState(true);
+    
     const [selectedPortaluuid, setSelectedPortaluuid] = useState<string>("2dba368b-6205-11e1-b101-0025901d40ea");
     const [jobtypes, setJobtypes] = useState<JobType[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
@@ -56,6 +64,7 @@ function Index() {
  
 
     const fetchData = () => {
+        setLoading(true);
         const fetchJobTypes = async () => {
             try {
                 const response = await axios.get("/api/index.php/rest/netlife/jobtypes", {
@@ -69,6 +78,7 @@ function Index() {
                 console.log('response', response.data);
                 if (response.status === 200){
                     setJobtypes(response.data.result)
+                    
                 } else{
                     console.log('No response');
                 }
@@ -149,12 +159,18 @@ function Index() {
     }, [correspondingCategories, jobtypes]);
     
     
-
+    // Shut down loader when all data is fetched and ready
+    useEffect(() => {
+       if (updatedJobTypes.length > 0){
+        setLoading(false)
+       }
+    }, [updatedJobTypes]);
 
 
 
     const handleOnChangeSelect = (portaluuid: string) => {
       console.log('portaluuid', portaluuid);
+      setShowAddCategoryButton("");
       setSelectedPortaluuid(portaluuid);
     };
 
@@ -237,71 +253,81 @@ function Index() {
                         </tr>
                     </thead>
                     <tbody>
-                        {updatedJobTypes && updatedJobTypes.map(item => (
-                            <tr key={item.uuid} className='table-row'>
-                                <td>
-                                    <h1>{item.name}</h1>
-                                </td>
-                                <td>
-                                    <div className='table-categories'>
-                                        {item.correspondingCategories && item.correspondingCategories.length > 0 ? (
-                                            <div>
-                                                {item.correspondingCategories.map((cat, index) => (
-                                                    <div className='d-flex'>
-                                                        <h6 key={cat.category_id}>
-                                                            {index+1}. {cat.category_name}
+                    {loading ? (
+                        <tr>
+                            <td colSpan={9} style={{ 
+                                textAlign: 'center', 
+                                height: '100px', 
+                                width: '64.6em',
+                                display: 'flex', 
+                                justifyContent: 'center', 
+                                alignItems: 'center' 
+                            }}>
+                                <Oval
+                                    height={50}
+                                    width={50}
+                                    color="#51f728"
+                                    visible={true}
+                                    ariaLabel="loading-indicator"
+                                />
+                            </td>
+                        </tr>
+                    ) : (
+                            updatedJobTypes.map(item => (
+                                <tr key={item.uuid} className="table-row">
+                                    <td>
+                                        <h1>{item.name}</h1>
+                                    </td>
+                                    <td>
+                                        <div className="table-categories">
+                                            {item.correspondingCategories && item.correspondingCategories.length > 0 ? (
+                                                item.correspondingCategories.map((cat, index) => (
+                                                    <div className="d-flex" key={cat.category_id}>
+                                                        <h6>
+                                                            {index + 1}. {cat.category_name}
                                                         </h6>
-                                                        <button 
-                                                            title='Delete Category From Job Type'
-                                                            className='delete-category-button'
-                                                        >
-                                                            <FontAwesomeIcon icon={faTrash}  />
+                                                        <button title="Delete Category From Job Type" className="delete-category-button">
+                                                            <FontAwesomeIcon icon={faTrash} />
                                                         </button>
                                                     </div>
+                                                ))
+                                            ) : (
+                                                <span><em>None</em></span>
+                                            )}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className="mt-1 table-select-box">
+                                            <select className="table-select" onChange={(e) => handleOnChangeTableSelect(e.target.value, item.uuid)}>
+                                                <option value="" disabled selected>
+                                                    Assign New Category
+                                                </option>
+                                                {categories.map(cat => (
+                                                    <option value={cat.id} key={cat.id}>
+                                                        {cat.name}
+                                                    </option>
                                                 ))}
-                                            </div>
-                                        ) : (
-                                            <span><em>None</em></span>
-                                        )}
-                                    </div>   
-                                </td>
-                                <td>
-                                    <div className='mt-1 table-select-box'>
-                                        <select
-                                            className='table-select'
-                                            onChange={(e) => handleOnChangeTableSelect(e.target.value, item.uuid)}
-                                        >
-                                            <option value="" disabled selected>
-                                                Choose Category
-                                            </option>
-                                            {categories && categories.map(cat => (
-                                                <option
-                                                    value={cat.id}
-                                                    key={cat.id}
+                                            </select>
+                                            {showAddCategoryButton === item.uuid && (
+                                                <button
+                                                    className="addnewcategory-button"
+                                                    title="Add New Category To Job Type"
+                                                    onClick={() => addNewCategory()}
                                                 >
-                                                    {cat.name}
-                                                </option>    
-                                            ))}
-                                            
-                                        </select>
-                                        {showAddCategoryButton === item.uuid && (
-                                            <button 
-                                                className='addnewcategory-button'  
-                                                title='Add New Category TO Job Type'
-                                                onClick={() => addNewCategory()}    
-                                            >
-                                                +
-                                            </button>
-                                        )}
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
+                                                    +
+                                                </button>
+                                            )}
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
 
 
+            <Sidemenu />
             <ToastContainer
                 position="bottom-left"
                 autoClose={3000}

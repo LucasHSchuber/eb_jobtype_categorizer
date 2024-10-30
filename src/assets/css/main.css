@@ -1,8 +1,8 @@
 html,body{
-    background-color: rgb(246, 246, 246) !important;
+    background-color: rgb(250, 250, 250) !important;
 }
 .wrapper{
-    padding: 5em 8em 10em 8em;
+    padding: 5em 8em 10em 19em;
 }
 
 
@@ -23,8 +23,8 @@ html,body{
 }
 
 .table {
-    width: 70% !important;
-    table-layout: fixed; /* Ensures columns are of equal width */
+    width: 85% !important;
+    table-layout: fixed;
 }
 
 .table th, .table td {
@@ -51,7 +51,7 @@ th {
     font-size: 1.1em;
 }
 .table-categories h6{
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 700;
 }
 
@@ -63,7 +63,7 @@ th {
     font-size: 1em;
     border-radius: 3px;
     border: 1px solid rgb(183, 183, 183) !important;
-    width: 12em;
+    width: 13em;
     background-color: rgb(255, 255, 255);
 }
 
