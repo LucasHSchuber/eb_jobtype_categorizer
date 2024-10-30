@@ -20,5 +20,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "apiConfig.js"]
+  "include": ["src", "src/assets/js/apiConfig.ts"]
 }

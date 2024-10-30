@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Sensitive data 
+.env
+.env.production
+src/assets/js/apiConfig
+/src/assets/js/apiConfig.ts
+portals.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

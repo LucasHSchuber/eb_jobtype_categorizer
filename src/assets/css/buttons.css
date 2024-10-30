@@ -1,0 +1,28 @@
+/* buttons */
+
+.delete-category-button{
+    background-color: inherit;
+    border: none;
+    margin-left: 2em;
+    color: rgb(255, 35, 35);
+    cursor: pointer;
+    border-radius: 50%;
+}
+.delete-category-button:hover{
+    background-color: rgb(228, 228, 228);
+    /* color: red; */
+}
+
+
+.addnewcategory-button{
+    background-color: rgb(48, 48, 48);
+    border: 1px solid rgb(84, 84, 84);
+    margin-left: 1em;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+.addnewcategory-button:hover{
+    background-color: rgb(83, 83, 83);
+    /* border: 1px solid black; */
+    /* color: red; */
+}
