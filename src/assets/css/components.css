@@ -10,10 +10,27 @@
     width: 15em;
     padding: 6em 0 0 0;
 }
-.link-box{
 
-}
 
 .active{
     background-color: rgb(222, 222, 222);
 }
+
+
+/* NEWCATEGORY MODAL */
+.newcategory-modal{
+    padding: 2em 2em;
+    border: 1px solid rgb(119, 119, 119);
+}
+.modal {
+    border: 10px solid black;
+}
+.modal-input{
+    height: 2.6em;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid rgb(160, 160, 160);
+    padding-left: 0.3em;
+}
+
+

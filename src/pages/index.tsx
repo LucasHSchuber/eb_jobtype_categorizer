@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // import fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 // import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'; 
 // import { faInstagram, faGithub, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
@@ -50,6 +50,8 @@ function Index() {
     const [loading, setLoading] = useState(true);
     
     const [selectedPortaluuid, setSelectedPortaluuid] = useState<string>("2dba368b-6205-11e1-b101-0025901d40ea");
+    const [selectedPortalName, setSelectedPortalName] = useState<string>("Expressbild");
+    const [selectedCategoryName, setSelectedCategoryName] = useState<string>("");
     const [jobtypes, setJobtypes] = useState<JobType[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [correspondingCategories, setCorrespondingCategories] = useState<Category[]>([]);
@@ -170,8 +172,12 @@ function Index() {
 
     const handleOnChangeSelect = (portaluuid: string) => {
       console.log('portaluuid', portaluuid);
+      const portalObject = portalArray.find(p => p.portaluuid === portaluuid);
+      const portalname = portalObject ? portalObject.name : ""
+      console.log('portalname', portalname);
       setShowAddCategoryButton("");
       setSelectedPortaluuid(portaluuid);
+      setSelectedPortalName(portalname);
     };
 
     const handleOnChangeTableSelect = (categoryid: string, jobtypeuuid: string) => {
@@ -179,6 +185,10 @@ function Index() {
         console.log('jobtypeuuid', jobtypeuuid);
         setNewCategoryId(categoryid);
         setNewJobtypeId(jobtypeuuid)
+        const catObject = categories.find(c => c.id === Number(categoryid))
+        console.log('catObject', catObject);
+        const categoryName = catObject ? catObject.name : "";
+        setSelectedCategoryName(categoryName);
 
         setShowAddCategoryButton(jobtypeuuid);
     };
@@ -186,25 +196,55 @@ function Index() {
 
     // METHOD POST to add new category to jobtype in neo_jobtypes table
     const addNewCategory = async () => {
-        const data = {
-            portaluuid: selectedPortaluuid,
-            category_id: newCategoryId,
-            jobtype_uuid: newJobtypeId
+        const confirm = window.confirm("Are your sure you want to assign category '" + selectedCategoryName + "' to job type?")
+        if (confirm){
+            const data = {
+                portaluuid: selectedPortaluuid,
+                category_id: newCategoryId,
+                jobtype_uuid: newJobtypeId
+            }
+            try {
+                const response = await axios.post(`${API_URL}api/post/neo_jobtypes`, data, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                console.log('response', response);
+                if (response.status === 201) {
+                    toast.success("New category was assign to job type successfully!")
+                    fetchData();
+                }
+            } catch (error) {
+                console.log('error adding new category to jobtype', error);
+            }
         }
-      try {
-        const response = await axios.post(`${API_URL}api/post/neo_jobtypes`, data, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        console.log('response', response);
-        if (response.status === 201) {
-            toast.success("New category was assign to job type successfully!")
-            fetchData();
-        }
-      } catch (error) {
-        console.log('error adding new category to jobtype', error);
-      }
+    };
+
+    // METHOD DELETE to add delete category from jobtype in neo_jobtypes table
+    const deleteCategoryFromJobtype = async (jobtypeUuid: string, categoryid: number) => {
+      console.log('jobtypeUuid', jobtypeUuid);
+      console.log('categoryid', categoryid);
+      const confirm = window.confirm("Are your sure you want to delete the category from job type?")
+      if (confirm){
+            try {
+                const deleteResponse = await axios.delete(`${API_URL}api/delete/neo_jobtypes`, {
+                    headers: {
+                        "Content-type": "Application/json",
+                    },
+                    params: {
+                        jobtype_uuid: jobtypeUuid,
+                        category_id: categoryid
+                    }
+                })
+                console.log('deleteResponse', deleteResponse);
+                if (deleteResponse.status === 200){
+                    toast.success("Category was deleted from job type successfully!")
+                    fetchData();
+                }
+            } catch (error) {
+                console.log('error deleting category from job type: ', error);
+            }
+        }  
     };
  
 
@@ -212,8 +252,9 @@ function Index() {
 
 
     return (
-        <div className='wrapper'>
+    <div>
 
+        <div className='jobtype-header-wrapper'>
             <div className='mb-5 header-box'>
                 <h1>Job Type Categorizer</h1>
             </div>
@@ -236,9 +277,13 @@ function Index() {
                     
                 </select>
             </div>
+        </div>
 
+        <div className='wrapper'>
             <div className='job-box'>
-                <h4 className='mb-3'>Selected Portal: </h4>
+                <div className='mb-5 selected-portal-box'>
+                    <h4>{selectedPortalName} </h4>
+                </div>
                 <table className='table'>
                     <thead>
                         <tr>
@@ -282,11 +327,11 @@ function Index() {
                                         <div className="table-categories">
                                             {item.correspondingCategories && item.correspondingCategories.length > 0 ? (
                                                 item.correspondingCategories.map((cat, index) => (
-                                                    <div className="d-flex" key={cat.category_id}>
+                                                    <div className="table-categories-box d-flex justify-content-between" key={cat.category_id}>
                                                         <h6>
                                                             {index + 1}. {cat.category_name}
                                                         </h6>
-                                                        <button title="Delete Category From Job Type" className="delete-category-button">
+                                                        <button title="Delete Category From Job Type" className="delete-category-button" onClick={() => deleteCategoryFromJobtype(item.uuid, cat.category_id) }>
                                                             <FontAwesomeIcon icon={faTrash} />
                                                         </button>
                                                     </div>
@@ -310,11 +355,11 @@ function Index() {
                                             </select>
                                             {showAddCategoryButton === item.uuid && (
                                                 <button
-                                                    className="addnewcategory-button"
+                                                    className="addcategory-button"
                                                     title="Add New Category To Job Type"
                                                     onClick={() => addNewCategory()}
                                                 >
-                                                    +
+                                                    <FontAwesomeIcon icon={faPlus} />
                                                 </button>
                                             )}
                                         </div>
@@ -330,21 +375,22 @@ function Index() {
             <Sidemenu />
             <ToastContainer
                 position="bottom-left"
-                autoClose={3000}
+                autoClose={4000}
                 hideProgressBar={false}
                 newestOnTop={false}
-                closeOnClick
+                closeOnClick={true}
                 rtl={false}
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
                 theme="light" // light, dark, colored
-                style={{ width: "500px", height: "50px", fontSize: "1rem", marginBottom: "3em", marginLeft: "1em" }}
+                style={{ width: "500px", height: "50px", fontSize: "1.1rem", marginBottom: "3em", marginLeft: "1em" }}
                 // toastClassName="custom-toast"
                 // bodyClassName="custom-toast-body"
             />
 
         </div>
+    </div>
     );
 }
 

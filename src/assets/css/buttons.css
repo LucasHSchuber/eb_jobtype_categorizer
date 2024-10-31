@@ -1,32 +1,36 @@
 /* buttons */
 
+
+/* INDEX */
 .delete-category-button{
     background-color: inherit;
-    border: none;
+    border: 1px solid rgb(225, 225, 225);
     margin-left: 2em;
-    margin-bottom: 0.5em;
+    margin-top: -0.5em;
+    padding: 0.2em 0.8em 0 0.8em;
     color: rgb(136, 136, 136);
     cursor: pointer;
     border-radius: 50%;
     font-size: 0.9em;
 }
 .delete-category-button:hover{
-    background-color: rgb(228, 228, 228);
-    color: rgb(72, 72, 72);
+    background-color: rgb(255, 172, 172);
+    color: rgb(53, 53, 53);
+    border: 1px solid rgb(168, 168, 168);
 }
 
 
-.addnewcategory-button{
+.addcategory-button{
     background-color: #51f728;
     border: 2px solid rgb(63, 63, 63);
-    padding: 0 0.5em 0.1em 0.5em;
+    padding: 0.2em 0.5em 0.1em 0.5em;
     border-radius: 3px;
     margin-left: 1em;
     font-weight: 700;
     color: rgb(42, 42, 42);
     cursor: pointer;
 }
-.addnewcategory-button:hover{
+.addcategory-button:hover{
     background-color: rgb(219, 219, 219);
 
 }
@@ -42,10 +46,102 @@
     width: 100%;
 }
 .link-button:hover{
-    background-color: rgb(210, 210, 210);
+    background-color: rgb(207, 207, 207);
     color: rgb(0, 0, 0);
-    border-bottom: 1px solid grey;
+    /* border-bottom: 1px solid grey; */
 }
 .link-button:focus{
     outline: none;
+}
+
+
+/* CATEGRORY MANAGMENT */
+.addnewcategory-button{
+    background-color: #fcfcfc;
+    border: 2px solid rgb(63, 63, 63);
+    padding: 0.6em 1.1em 0.4em 1.1em;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 1.1em;
+    color: rgb(42, 42, 42);
+    cursor: pointer;
+}
+.addnewcategory-button:hover{
+    background-color: #e0e0e0;
+    border: 2px solid rgb(146, 146, 146);
+    color: rgb(0, 0, 0);
+
+}
+
+
+
+.delete-cat-button{
+    background-color: inherit;
+    border: 1px solid rgb(225, 225, 225);
+    padding: 0.7em 0.9em 0.5em 0.9em;
+    color: rgb(30, 30, 30);
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 0.9em;
+}
+.delete-cat-button:hover{
+    background-color: rgb(255, 172, 172);
+    color: rgb(53, 53, 53);
+    border: 1px solid rgb(168, 168, 168);
+}
+
+.edit-categoory-button{
+    background-color: inherit;
+    border: 1px solid rgb(225, 225, 225);
+    padding: 0.7em 0.9em 0.5em 0.9em;
+    color: rgb(30, 30, 30);
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 0.9em;
+}
+.edit-categoory-button:hover{
+    background-color: rgb(255, 243, 172);
+    color: rgb(53, 53, 53);
+    border: 1px solid rgb(168, 168, 168);
+}
+
+
+
+/* MODAL btn */
+.close-modal-button{
+    background-color: #262626;
+    border: 2px solid rgb(173, 173, 173);
+    padding: 0.6em 1.3em;
+    border-radius: 5px;
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+.close-modal-button:hover{
+    background-color: #424242;
+
+}
+.addcategory-modal-button{
+    background-color: #51f728;
+    border: 2px solid rgb(173, 173, 173);
+    padding: 0.6em 1.3em;
+    border-radius: 5px;
+    font-weight: 500;
+    color: rgb(42, 42, 42);
+    cursor: pointer;
+}
+.addcategory-modal-button:hover{
+    background-color: #bcffad;
+}
+.editcategory-modal-button{
+    background-color: rgb(255, 243, 172);
+    border: 2px solid rgb(173, 173, 173);
+    padding: 0.6em 1.3em;
+    border-radius: 5px;
+    font-weight: 500;
+    color: rgb(42, 42, 42);
+    cursor: pointer;
+}
+.editcategory-modal-button:hover{
+    background-color: rgb(255, 234, 117);
 }
