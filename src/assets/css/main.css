@@ -4,13 +4,15 @@ html,body{
 }
 .jobtype-header-wrapper{
     padding: 5em 8em 1em 20em;
-    font-family: "Quicksand", sans-serif;
-    background-color: rgb(203, 209, 255);
+    /* font-family: "Quicksand", sans-serif; */
+    font-family: "Cabin", sans-serif;
+    background-color: #cbd1ff;
 }
 .category-header-wrapper{
     padding: 5em 8em 1em 20em;
-    font-family: "Quicksand", sans-serif;
-    background-color: rgb(203, 250, 255);
+    /* font-family: "Quicksand", sans-serif; */
+    font-family: "Cabin", sans-serif;
+    background-color: #ffcfcb;
 }
 .wrapper{
     padding: 5em 8em 10em 20em;
@@ -20,13 +22,25 @@ html,body{
 
 
 
-.select{
-    padding: 0.5em 0.5em 0.5em 0.2em;
+.select {
+    appearance: none;           
+    -webkit-appearance: none;   
+    -moz-appearance: none;
+    background-color: rgb(43, 43, 43);
+    color: white;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAUCAMAAACtdX32AAAAdVBMVEUAAAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhMdQaAAAAJ3RSTlMAAAECAwQGBwsOFBwkJTg5RUZ4eYCHkJefpaytrsXGy8zW3+Do8vNn0bsyAAAAYElEQVR42tXROwJDQAAA0Ymw1p9kiT+L5P5HVEi3qJn2lcPjtIuzUIJ/rhIGy762N3XaThqMN1ZPALsZPEzG1x8LrFL77DHBnEMxBewz0fJ6LyFHTPL7xhwzWYrJ9z22AqmQBV757MHfAAAAAElFTkSuQmCC) no-repeat right 10px center;
+    background-position: 100%;
+    background-repeat: no-repeat;
+    filter: invert(100%) brightness(0%) saturate(100%);
+    padding: 0.6em 1.4em 0.7em 0.75em !important;
     font-size: 1.2em;
-    border-radius: 3px;
+    border-radius: 20px;
     border: 1px solid rgb(183, 183, 183) !important;
     width: 14em;
-    background-color: rgb(255, 255, 255);
+}
+.select-wrapper option{
+    background-color: rgb(45, 45, 45);
+    color: rgb(255, 255, 255) !important;
 }
 
 .selected-portal-box{
@@ -39,12 +53,11 @@ html,body{
 }
 .selected-portal-box h4{
     font-size: 1.4em;
-
 }
 
 .search-box{
     border-radius: 30px;
-    padding: 0.2em 0.75em;
+    padding: 0.45em 0.75em 0.25em 0.75em;
     border: 1px solid rgb(167, 167, 167);
     width: 12em;
 }
@@ -53,25 +66,19 @@ html,body{
     width: 85% !important;
     table-layout: fixed;
 }
-
 .table th, .table td {
     width: 50%; 
     padding: 8px;
     text-align: left;
     border: 1px solid #ddd;
 }
-
 .table th {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2 !important;
 }
-
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-}
-th {
-    background-color: #f2f2f2;
 }
 
 .table-row h1 {
@@ -93,14 +100,41 @@ th {
 .table-select{
     padding: 0.3em 0.5em 0.3em 0.2em;
     font-size: 1em;
-    border-radius: 3px;
+    border-radius: 6px;
     border: 1px solid rgb(183, 183, 183) !important;
     width: 13em;
     background-color: rgb(255, 255, 255);
 }
+.table-select option{
+    background-color: rgb(45, 45, 45);
+    color: rgb(255, 255, 255) !important;
+}
+
+@media (max-width: 1410px) {
+    .table {
+        width: 100% !important;
+    }
+}
 
 
 
+
+.cm-table{
+    width: 50% !important;
+    table-layout: fixed;
+}
+.cm-table th, .cm-table td {
+    border: 1px solid #ddd;
+}
+.cm-table th {
+    background-color: #f2f2f2;
+}
 .categories-box h6{
     font-size: 1.3em;
+}
+
+@media (max-width: 1810px) {
+    .cm-table {
+        width: 100% !important;
+    }
 }

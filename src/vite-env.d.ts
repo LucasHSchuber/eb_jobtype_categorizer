@@ -33,6 +33,8 @@ declare module '*.ts' {
 
 interface ImportMetaEnv {
   readonly VITE_API_URL: string;
+  readonly VITE_TOKEN: string;
+  readonly DEV: boolean;
 }
 
 interface ImportMeta {

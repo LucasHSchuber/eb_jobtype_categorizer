@@ -7,7 +7,7 @@
     border: 1px solid rgb(225, 225, 225);
     margin-left: 2em;
     margin-top: -0.5em;
-    padding: 0.2em 0.8em 0 0.8em;
+    padding: 0.2em 0.7em 0 0.7em;
     color: rgb(136, 136, 136);
     cursor: pointer;
     border-radius: 50%;
@@ -23,7 +23,7 @@
 .addcategory-button{
     background-color: #51f728;
     border: 2px solid rgb(63, 63, 63);
-    padding: 0.2em 0.5em 0.1em 0.5em;
+    padding: 0.21em 0.5em 0 0.5em;
     border-radius: 3px;
     margin-left: 1em;
     font-weight: 700;
@@ -31,8 +31,7 @@
     cursor: pointer;
 }
 .addcategory-button:hover{
-    background-color: rgb(219, 219, 219);
-
+    background-color: #bcffad;
 }
 
 .link-button{
@@ -58,19 +57,18 @@
 /* CATEGRORY MANAGMENT */
 .addnewcategory-button{
     background-color: #fcfcfc;
-    border: 2px solid rgb(63, 63, 63);
+    border: 1px solid rgb(204, 204, 204);
     padding: 0.6em 1.1em 0.4em 1.1em;
-    border-radius: 5px;
+    border-radius: 3px;
     font-weight: 500;
     font-size: 1.1em;
     color: rgb(42, 42, 42);
     cursor: pointer;
 }
 .addnewcategory-button:hover{
-    background-color: #e0e0e0;
+    background-color: #f6f6f6;
     border: 2px solid rgb(146, 146, 146);
     color: rgb(0, 0, 0);
-
 }
 
 

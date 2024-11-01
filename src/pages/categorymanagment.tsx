@@ -12,16 +12,23 @@ import { faTrash, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
 // import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'; 
 // import { faInstagram, faGithub, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
+// import loader
+import { Oval } from 'react-loader-spinner';  
+
 // import components
 import Sidemenu  from '../components/sidemenu';
 import ShowCategoryModal from '../components/showCategoryModal';
 import ShowEditCategoryModal from '../components/showEditModal';
 
+// import ENVIROMENTAL VAR
 import { API_URL } from '../assets/js/apiConfig'
-console.log('import.meta.env', import.meta.env);
+const ENV = import.meta.env;
+console.log('ENV', ENV);
 console.log('API_URL', API_URL);
 
+
 import portalArray from '../assets/js/portals'
+import getToken from '../assets/js/fetchToken'
 // console.log('portalArray', portalArray);
 
 
@@ -51,6 +58,9 @@ interface EditCategory {
 
 function Categorymanagment() {
     // Define states
+    const [loading, setLoading] = useState(true);
+    const [TokenValidation, setTokenValidation] = useState<boolean | null>(null);
+
     const [selectedPortaluuid, setSelectedPortaluuid] = useState<string>("2dba368b-6205-11e1-b101-0025901d40ea");
     const [selectedPortalName, setSelectedPortalName] = useState<string>("Expressbild");
     const [categories, setCategories] = useState<Category[]>([]);
@@ -59,6 +69,86 @@ function Categorymanagment() {
     const [showEditCategoryModal, setShowEditCategoryModal] = useState(false);
 
     const [editCategoryArray, setEditCategoryArray] = useState<EditCategory | null>(null);
+
+
+
+   // -------------- FETCHING TOKEN ------------------
+    // fetching token from external ts file
+    const token = getToken();
+    
+    useEffect(() => {
+      console.log('TokenValidation', TokenValidation);
+    }, [TokenValidation]);
+
+    useEffect(() => {
+        const getToken = async () => {
+          if (token) {
+            const validatedToken = await validateToken(token); 
+            // setValidationResult(validatedToken);
+            console.log('validatedToken', validatedToken);
+            if (validatedToken !== null) {
+                console.log("TOKEN VALID");
+                setTokenValidation(true)
+            }else {
+                setTokenValidation(false)
+            }
+          }
+        };  
+    getToken(); 
+    }, [token]); 
+    // Validate token 
+    const validateToken = async (token: string) => {
+        try {
+            const response = await axios.get(
+            `/api/index.php/rest/auth/validate_token/${token}`,
+            {
+                headers: {
+                'Content-Type': 'application/json',
+                },
+            }
+            );
+            console.log('Token response:', response.data.result);
+            return response.data.result; 
+        } catch (error) {
+            console.error('Error validating token:', error);
+            return null;
+        }
+    };
+
+
+    // METHOD to fetch categories from db
+    const fetchCategories = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${API_URL}api/neo_jobtypes_categories`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                params: {
+                    portaluuid: selectedPortaluuid
+                }
+            }
+            )
+            // console.log('response', response);
+            if (response.status === 200){
+                console.log('Categories:', response.data.data);
+                setCategories(response.data.data)
+                setLoading(false);
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+    useEffect(() => {   
+        if (TokenValidation){
+            fetchCategories();
+            console.log('fetching data');
+        } else if (TokenValidation == false && TokenValidation !== null) {
+            console.log("TOKEN MISSING OR INVALID");
+            toast.error("Token is missing or invalid")
+            setLoading(false);
+        }
+    }, [selectedPortaluuid, TokenValidation]);
 
 
     const closeModal = () => {
@@ -100,32 +190,7 @@ function Categorymanagment() {
                   console.log('error deleting category: ', error);
               }
           }  
-      };
-
-
-    const fetchCategories = async () => {
-        try {
-            const response = await axios.get(`${API_URL}api/neo_jobtypes_categories`, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                params: {
-                    portaluuid: selectedPortaluuid
-                }
-            }
-            )
-            // console.log('response', response);
-            if (response.status === 200){
-                console.log('Categories:', response.data.data);
-                setCategories(response.data.data)
-            }
-        } catch (error) {
-            console.log('error', error);
-        }
-    }
-    useEffect(() => {   
-        fetchCategories();
-    }, [selectedPortaluuid]);
+    };
 
 
 
@@ -147,6 +212,34 @@ function Categorymanagment() {
 
 
 
+    // If missing token SHOW:  
+    if (TokenValidation === false) {
+        return (
+            <div className='wrapper' >
+            <h2 style={{ color: '#ff4d4d', marginBottom: '10px' }}>Missing or Invalid Token</h2>
+            <h5 style={{ color: '#666', marginBottom: '20px' }}>
+                Please contact IT if the issue persists.
+            </h5>
+            <button 
+                onClick={() => window.location.reload()} 
+                style={{
+                    padding: '10px 20px',
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer'
+                }}
+            >
+                Refresh Page
+            </button>
+        </div>
+        );
+    }
+
+
+
+
     return (
     <div>
         <div className='category-header-wrapper'>
@@ -155,7 +248,7 @@ function Categorymanagment() {
             </div>
 
             {/* Portaluuid Select box */}
-            <div className='mb-5'>
+            <div className='select-wrapper mb-5'>
                 <select
                     className='select'
                     onChange={(e) => handleOnChangeSelect(e.target.value)}
@@ -169,7 +262,6 @@ function Categorymanagment() {
                             {item.name}
                         </option>    
                     ))}
-                    
                 </select>
             </div>
         </div>
@@ -181,7 +273,7 @@ function Categorymanagment() {
                 </div>
                 <h5>Existing Categories:</h5>
                 <div className='categories-box'>
-                    <table className="table">
+                    <table className="cm-table">
                         <thead>
                             <tr>
                                 <th scope="col">Category Name</th>
@@ -189,17 +281,30 @@ function Categorymanagment() {
                             </tr>
                         </thead>
                         <tbody>
-                            {categories && categories.map(cat => (
+                            {loading ? (
+                                 <tr>
+                                    <td style={{ 
+                                        textAlign: 'center', 
+                                        height: '100px', 
+                                        width: '200%',
+                                        display: 'flex', 
+                                        justifyContent: 'center', 
+                                        alignItems: 'center' 
+                                    }}>
+                                        <Oval
+                                            height={50}
+                                            width={50}
+                                            color="#ffcfcb"
+                                            visible={true}
+                                            ariaLabel="loading-indicator"
+                                        />
+                                    </td>
+                                </tr>
+                            ) : (
+                                categories && categories.map(cat => (
                                 <tr key={cat.id}>
                                     <td>{cat.name}</td>
                                     <td>
-                                        <button 
-                                            title='Delete Category'
-                                            className='mr-2 delete-cat-button'
-                                            onClick={() => deleteCategory(cat.id)} 
-                                        >
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </button>
                                         <button 
                                             title='Edit Category'
                                             className='edit-categoory-button'
@@ -207,13 +312,22 @@ function Categorymanagment() {
                                         >
                                             <FontAwesomeIcon icon={faEdit} />
                                         </button>
+                                        <button 
+                                            title='Delete Category'
+                                            className='ml-2 delete-cat-button'
+                                            onClick={() => deleteCategory(cat.id)} 
+                                        >
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </button>
                                     </td>
                                 </tr>
-                            ))}
+                            )))}
                         </tbody>
                     </table>
                 </div>
-                <button onClick={() => setShowNewCategoryModal(!showNewCategoryModal)} className='addnewcategory-button'><FontAwesomeIcon icon={faPlus} /> Add New Category to {selectedPortalName}</button>
+               
+                <button onClick={() => setShowNewCategoryModal(!showNewCategoryModal)} className='mt-3 addnewcategory-button'><FontAwesomeIcon icon={faPlus} /> Add New Category to {selectedPortalName}</button>
+            
             </div>
 
 

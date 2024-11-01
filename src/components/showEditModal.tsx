@@ -91,7 +91,7 @@ const ShowEditCategoryModal: React.FC<ShowCategoryModalProps> = ({ show, onClose
                     <h4></h4>
                     <form>
                         <div className="mb-3">
-                            <label htmlFor="categoryName" className="form-label">Edit Category Name</label>
+                            <h6      className="form-label">Edit Category Name</h6>
                             <div>
                                 <input type="text" className={`modal-input ${errorBorder ? "error-border" : ""}`} id="categoryName" placeholder='New category name' defaultValue={editCategoryArray.name} onChange={(e) => handleInput(e.target.value)} />
                                 {errorCategoryExists && (
