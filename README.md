@@ -3,6 +3,8 @@
 ### Software developer / Systemutvecklare
 
 This repository contains the web applications job-type-categorizer where the user can assign categories to job types and create new categories.  It is built using React.js with Vite.
+- Job Type Categorizer 
+- Categoriy Managment
 
 ### Installation
 1. Clone this repository:
