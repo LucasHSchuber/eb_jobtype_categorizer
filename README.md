@@ -14,3 +14,16 @@ This repository contains the web applications job-type-categorizer where the use
 ## Important Files:
 - .env IN ROOT
 - .env.production IN ROOT
+- apiConfig.ts in src/assets/js/
+
+
+.env:
+VITE_API_URL=http://localhost:5001/
+VITE_TOKEN=my_token
+
+.env.production:
+VITE_API_URL=my_prodcution_api_url
+
+apiConfig:
+export const API_URL = import.meta.env.VITE_API_URL;
+export const TOKEN = import.meta.env.VITE_TOKEN;
