@@ -245,6 +245,7 @@ function Categorymanagment() {
         <div className='category-header-wrapper'>
             <div className='mb-5 header-box'>
                 <h1>Category Managment</h1>
+                <h5>Manage the categories and get an overview of the exisiting categories in the different portals</h5>
             </div>
 
             {/* Portaluuid Select box */}

@@ -1,5 +1,7 @@
 /* components css */
 
+
+/* SIDEMENU */
 .sidemenu{
     position: fixed;
     top: 0;
@@ -10,11 +12,10 @@
     width: 15em;
     padding: 6em 0 0 0;
 }
-
-
 .active{
     background-color: rgb(222, 222, 222);
 }
+
 
 
 /* NEWCATEGORY MODAL */

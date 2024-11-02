@@ -36,7 +36,7 @@ const Sidemenu: React.FC = () => {
     return (
         <div className="sidemenu">
             {/* Navigation Links */}
-            <h4 className='mb-4' style={{ fontWeight: "700", marginLeft: "1.75em", textDecoration: "underline" }}>Menu</h4>
+            <h4 className='mb-4' style={{ fontWeight: "700", marginLeft: "1.5em", textDecoration: "underline" }}>Menu</h4>
             <div className='link-box'>
                 <div>
                     <button

@@ -348,13 +348,14 @@ function Index() {
         );
     }
 
-    
+
     return (
     <div>
 
         <div className='jobtype-header-wrapper'>
             <div className='mb-5 header-box'>
                 <h1>Job Type Categorizer</h1>
+                <h5>Get an overview of the job types in the different portals and assign new categories to job types</h5>
             </div>
 
             {/* Portaluuid Select box */}
