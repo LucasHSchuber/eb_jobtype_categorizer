@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from "axios";
 
@@ -99,9 +99,7 @@ function Categorymanagment() {
     // Validate token 
     const validateToken = async (token: string) => {
         try {
-            const response = await axios.get(
-            `/api/index.php/rest/auth/validate_token/${token}`,
-            {
+            const response = await axios.get(`${ENV.MODE === "production" ? "https://backend.expressbild.org" : "/api"}/index.php/rest/auth/validate_token/${token}`,{
                 headers: {
                 'Content-Type': 'application/json',
                 },
