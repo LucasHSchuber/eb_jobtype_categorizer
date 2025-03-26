@@ -106,7 +106,7 @@ const ShowEditCategoryModal: React.FC<ShowCategoryModalProps> = ({ show, onClose
                         Close
                     </button>
                     <button className='editcategory-modal-button' onClick={() => EditCategory()}>
-                        <FontAwesomeIcon icon={faEdit} /> Edit
+                        <FontAwesomeIcon icon={faEdit} /> Save
                     </button>
                 </div>
             </div>

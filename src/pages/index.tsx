@@ -1,38 +1,20 @@
-// import React from 'react';
+
 import { useState, useEffect } from 'react';
 import axios from "axios";
-
-// import toastify
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-// import fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 // import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'; 
 // import { faInstagram, faGithub, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-
-// import loader
 import { Oval } from 'react-loader-spinner';  
-
-// import components
 import Sidemenu  from '../components/sidemenu';
-
-// import ENVIROMENTAL VAR
 import { API_URL } from '../assets/js/apiConfig'
-// const ENV = import.meta.env;
-// console.log('ENV', ENV);
-// console.log('API_URL', API_URL);
 
-// import external ts files
 import portalArray from '../assets/js/portals'
 import getToken from '../assets/js/fetchToken'
-// console.log('getToken', getToken);
 
 const ENV = import.meta.env;
-console.log("ENV", ENV);
-console.log("ENV.MODE", ENV.MODE);
-
 
 // Interfaces
 interface JobType {
@@ -56,17 +38,13 @@ interface Data {
 function Index() {
     // Define states
     const [loading, setLoading] = useState(true);
-    // const [validationResult, setValidationResult] = useState<string | null>(null);
     const [TokenValidation, setTokenValidation] = useState<boolean | null>(null);
-    // const [token, setToken] = useState("");
-    
     const [selectedPortaluuid, setSelectedPortaluuid] = useState<string>("2dba368b-6205-11e1-b101-0025901d40ea");
     const [selectedPortalName, setSelectedPortalName] = useState<string>("Expressbild");
     const [selectedCategoryName, setSelectedCategoryName] = useState<string>("");
     const [jobtypes, setJobtypes] = useState<JobType[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [correspondingCategories, setCorrespondingCategories] = useState<Category[]>([]);
-    // const [data, setData] = useState<Data[]>([]);
     const [updatedJobTypes, setUpdatedJobTypes] = useState<Data[]>([]);
     const [showAddCategoryButton, setShowAddCategoryButton] = useState<string>("");
     

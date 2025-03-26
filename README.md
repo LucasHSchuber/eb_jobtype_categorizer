@@ -2,7 +2,7 @@
 ### Lucas H. Schuber
 ### Software developer / Systemutvecklare
 
-This repository contains the web applications job-type-categorizer where the user can assign categories to job types and create new categories.  It is built using React.js with Vite.
+This repository contains the web applications job-type-categorizer where the user can assign categories to job types and create new categories. 
 - Job Type Categorizer 
 - Categoriy Managment
 
